@@ -46,8 +46,8 @@ class DashboardServiceTest {
 
     @Test
     void shouldGetDashboardWithAllConsumptionFilterBranchesAndActivities() {
-        when(vehicleRepository.countByVehicleStatus(VehicleStatus.EM_USO)).thenReturn(2L);
-        when(vehicleRepository.countByVehicleStatus(VehicleStatus.DISPONIVEL)).thenReturn(5L);
+        when(vehicleRepository.countByVehicleStatus(VehicleStatus.EM_USO)).thenReturn(2);
+        when(vehicleRepository.countByVehicleStatus(VehicleStatus.DISPONIVEL)).thenReturn(5);
         when(userRepository.countByProfileAndUserStatus(Profile.TECNICO, UserStatus.EM_CAMPO)).thenReturn(3L);
 
         Refueling r1 = new Refueling();
