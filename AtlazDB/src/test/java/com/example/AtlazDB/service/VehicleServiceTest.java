@@ -24,7 +24,7 @@ import com.example.AtlazDB.dto.VehicleRequestDTO;
 import com.example.AtlazDB.dto.VehicleResponseDTO;
 import com.example.AtlazDB.enums.CnhType;
 import com.example.AtlazDB.enums.VehicleStatus;
-import com.example.AtlazDB.model.BusinessRuleException;
+import com.example.AtlazDB.service.BusinessRuleException;
 import com.example.AtlazDB.model.Model;
 import com.example.AtlazDB.model.Refueling;
 import com.example.AtlazDB.model.ServiceOrder;

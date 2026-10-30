@@ -19,7 +19,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.example.AtlazDB.dto.UserRequestDTO;
 import com.example.AtlazDB.enums.UserStatus;
-import com.example.AtlazDB.model.BusinessRuleException;
+import com.example.AtlazDB.service.BusinessRuleException;
 import com.example.AtlazDB.model.User;
 import com.example.AtlazDB.repository.ServiceOrderRepository;
 import com.example.AtlazDB.repository.UserRepository;
