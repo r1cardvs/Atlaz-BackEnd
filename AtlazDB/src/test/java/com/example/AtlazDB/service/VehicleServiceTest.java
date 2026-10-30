@@ -325,3 +325,62 @@ class VehicleServiceTest {
         soNoDeparture.setDepartureKm(null);
         Refueling r3 = new Refueling();
         r3.setServiceOrder(soNoDeparture);
+
+        ServiceOrder soValidKm = new ServiceOrder();
+        soValidKm.setDepartureKm(BigDecimal.valueOf(100));
+        soValidKm.setArrivalKm(BigDecimal.valueOf(200));
+        Refueling r4 = new Refueling();
+        r4.setServiceOrder(soValidKm);
+        r4.setLiters(null);
+
+        Refueling r5 = new Refueling();
+        r5.setServiceOrder(soValidKm);
+        r5.setLiters(BigDecimal.ZERO);
+
+        ServiceOrder soNegativeKm = new ServiceOrder();
+        soNegativeKm.setDepartureKm(BigDecimal.valueOf(200));
+        soNegativeKm.setArrivalKm(BigDecimal.valueOf(100));
+        Refueling r6 = new Refueling();
+        r6.setServiceOrder(soNegativeKm);
+        r6.setLiters(BigDecimal.valueOf(10));
+
+        Refueling r7 = new Refueling();
+        r7.setServiceOrder(soValidKm);
+        r7.setLiters(BigDecimal.valueOf(10));
+
+        when(refuelingRepository.findByVehicleId(1L))
+                .thenReturn(List.of(r1, r2, r3, r4, r5, r6, r7));
+
+        Double average = vehicleService.calculateAverageConsumption(1L);
+
+        assertEquals(10.0, average);
+    }
+
+    @Test
+    void shouldReturnZeroAverageConsumptionWhenListIsEmpty() {
+        when(refuelingRepository.findByVehicleId(1L)).thenReturn(List.of());
+
+        Double average = vehicleService.calculateAverageConsumption(1L);
+
+        assertEquals(0.0, average);
+    }
+
+    @Test
+    void shouldUpdateOilChangeKmSuccessfully() {
+        when(repository.findById(1L)).thenReturn(Optional.of(defaultVehicle));
+        when(repository.save(any(Vehicle.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        VehicleResponseDTO result = vehicleService.atualizarKmTrocaOleo(1L, BigDecimal.valueOf(20000));
+
+        assertNotNull(result);
+        assertEquals(BigDecimal.valueOf(20000), defaultVehicle.getKmTrocaOleo());
+    }
+
+    @Test
+    void shouldThrowExceptionWhenVehicleNotFoundOnUpdateOilChangeKm() {
+        when(repository.findById(99L)).thenReturn(Optional.empty());
+
+        assertThrows(RuntimeException.class,
+                () -> vehicleService.atualizarKmTrocaOleo(99L, BigDecimal.valueOf(20000)));
+    }
+}
